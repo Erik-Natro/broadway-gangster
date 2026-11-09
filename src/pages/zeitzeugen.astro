@@ -1,0 +1,66 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+const people = [
+  {
+    name: 'Werner Teumer',
+    born: 1927,
+    title: '„Nur der Freiheit gehört unser Leben“',
+    text: [
+      'Teumer wuchs ohne Vater in Reudnitz auf und begann 1942 eine Lehre als Feinmechaniker. Mit etwa zehn Freunden, meist Lehrlingen, traf er sich ab Ende 1942 im „Naumannbräu“ und in anderen Kneipen. Man diskutierte über die Nazis und war gegen Krieg und Gewalt.',
+      '1943 schrieb er Flugblätter und wollte sie an Straßenbahnhaltestellen und am Hauptbahnhof verteilen. Am 6. November 1943 wurde er von der Gestapo verhört und verhaftet. Das Oberlandesgericht Dresden verurteilte ihn im September 1944 wegen „Wehrkraftzersetzung“ zu 18 Monaten Haft. Am 8. Mai 1945 kam er frei.',
+    ],
+    quote: 'Es lebe der Brodway! – Schlusszeile seines Flugblatts',
+    images: [
+      ['naumannbraeu', 'Der große Saal der Gaststätte Naumannbräu mit gedeckten Tischen', 'Das Naumannbräu war der Treffpunkt von Teumers Freundeskreis. Hier spielten auch kleine Orchester Tanzmusik.'],
+      ['jack-brandy', 'Fünf Jugendliche mit Instrumenten vor einer Stoffwand mit dem Schriftzug „Jack Brandy“', 'Teumers Gruppe (er mit der Flüstertüte) im Sommer 1943 im Hinterhof, aufgestellt als Tanzkapelle „Jack Brandy“.'],
+      ['hauptbahnhof', 'Leipziger Hauptbahnhof mit Fußgängerunterführung', 'In dieser Unterführung am Hauptbahnhof wollte Teumer Flugblätter anbringen.'],
+      ['flugblatt', 'Schreibmaschinentext des Flugblatts „Deutsche Jugend! Komme zu uns!“', 'Teumers Flugblatt aus der Anklageschrift von 1944.'],
+    ],
+  },
+  {
+    name: 'Horst Geisenhainer',
+    born: 1921,
+    title: '„Das Stückchen am Connewitzer Kreuz, das war für uns der Broadway“',
+    text: [
+      'Geisenhainer kam aus Connewitz und lernte Feinmechaniker. Über Fußball und Schallplatten fand er zur Clique am Connewitzer Kreuz. Man hörte Jazz vom Koffergrammophon und trug bewusst Kleidung, die anders aussah als die der Nazis, etwa weiße Strümpfe und blanke Koppelschlösser.',
+      'Der HJ-Streifendienst jagte die Gruppe weg. Einmal wurden er und andere sogar von einem Polizisten mit zur Wache genommen und notiert. Sein Spitzname war „Broadwaykastanie“.',
+    ],
+    quote: null,
+    images: [
+      ['pegauer-strasse', 'Straßenansicht der Pegauer Straße in Connewitz', 'Auf der Pegauer Straße (heute Wolfgang-Heinze-Straße) traf sich die Connewitzer Meute.'],
+      ['teddy-stauffer', 'Werbebild des Tanzorchesters Teddy Stauffer mit seinen Original-Teddies', 'Teddy Stauffer leitete das bekannte Swing-Orchester, das Schallplatten produzierte. Für viele Jugendliche war er ein Idol.'],
+    ],
+  },
+  {
+    name: 'Johannes Pawlisch',
+    born: 1920,
+    title: '„Hitler will nicht am Kreuz enden“',
+    text: [
+      'Pawlisch wuchs in Connewitz in einem sozialdemokratisch geprägten Elternhaus auf und war bei den Roten Falken. Nach deren Verbot kam er durch ältere Freunde zur Bündischen Jugend. Treffen mussten sorgfältig getarnt werden, etwa durch getrennte Wege, um HJ-Streifen und der Polizei auszuweichen.',
+    ],
+    quote: null,
+    images: [
+      ['pawlisch', 'Junger Mann in Kluft mit Rucksack in einer Parklandschaft', 'Johannes Pawlisch in Kluft und mit Rucksack, umgangssprachlich „Affe“ genannt.'],
+    ],
+  },
+];
+---
+<Base title="Zeitzeugen">
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker">Zeitzeugen</p>
+      <h1>Stimmen von damals</h1>
+      <p class="lead">Drei Männer erzählen in Interviews von 2002 und 2003, wie sie die Zeit als Jugendliche erlebt haben.</p>
+    </section>
+    {people.map((p) => (
+      <section class="card">
+        <h3>{p.name} <span class="meta">(*{p.born})</span></h3>
+        <p class="meta">{p.title}</p>
+        {p.text.map((t) => <p>{t}</p>)}
+        {p.quote && <blockquote>{p.quote}</blockquote>}
+        {p.images.map(([src, alt, caption]) => <Figure src={src} alt={alt} caption={caption} />)}
+      </section>
+    ))}
+  </div>
+</Base>

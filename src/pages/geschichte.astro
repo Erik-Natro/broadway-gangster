@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+const symbols = ['Totenkopf', 'Roter Tiroler Adler', 'Buchstaben „BJ“ (Bündische Jugend)', 'Englische und amerikanische Flagge als Ziertuch'];
+const verdicts = [
+  ['Horst Zimmerschitt', 'Vergehen gegen das Heimtückegesetz', '6 Monate Gefängnis'],
+  ['Wolfgang Lindner', 'Körperverletzung', '4 Monate Gefängnis'],
+  ['Fritz Quaas', 'Körperverletzung', '2 Wochen Gefängnis'],
+  ['Die übrigen Angeklagten', '–', 'Freispruch'],
+];
+---
+<Base title="Die Gruppe">
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker">Die Gruppe</p>
+      <h1>Wer waren die Broadway-Gangster?</h1>
+      <p class="lead">Acht Angeklagte, geboren zwischen 1925 und 1927, und eine Szene, die weit größer war.</p>
+    </section>
+
+    <h2>Treffpunkte und Cliquen</h2>
+    <p>Seit dem Sommer 1942 trafen sich Jugendliche aus verschiedenen Stadtteilen in den Gaststätten „Römisches Haus“ und „Canitz“ im Zentrum. Besonders anziehend war die „Canitz“, wo eine jugendliche Jazzkapelle spielte. Die Anklageschrift unterscheidet Gruppen wie die „Connewitzer“ und die „Engelsdorfer“. Die Wortführer waren unter anderem Fritz Quaas, Joachim Wawrzyniak und Rudolf Jäger („Micke“).</p>
+
+    <Figure src="canitz" alt="Historische Fotografie der Kreuzung am Peterssteinweg mit dem Münzblock" caption="Die Gaststätte Canitz, Treffpunkt der „Broadway-Gangster“, lag im Erdgeschoss rechts im Münzblock am Peterssteinweg." />
+
+    <h2>Zeichen der Zugehörigkeit</h2>
+    <ul class="symbols">
+      {symbols.map((s) => <li>{s}</li>)}
+    </ul>
+    <p>Die Hitlerjungen nannten sie „Kohlmänner“. Die Jugendlichen selbst verwiesen mit dem Namen „Broadway-Gangster“ auf ihre Begeisterung für englische Musik und amerikanische Filme wie „Broadway-Melodie 1938“, die in Deutschland bis 1941 noch gezeigt wurden.</p>
+
+    <h2>Der Vorwurf</h2>
+    <p>Laut Anklage lehnten die Jugendlichen die HJ ab, missachteten die Jugendschutzverordnung und gaben sich „zügellos“. Konkret ging es um Spottgedichte, um das Tragen der Symbole und um eine Schlägerei auf einem Rummelplatz am 26. April 1943, bei der Dutzende Jugendliche auf die Hitlerjugend trafen.</p>
+    <blockquote>„Heute ist Nazijazz in Leipzig auf dem Kohlenplatz“ – Zeile aus Zimmerschitts Gedicht (Anklageschrift)</blockquote>
+
+    <h2>Das Urteil vom 26. November 1943</h2>
+    <table>
+      <thead><tr><th>Angeklagter</th><th>Vorwurf</th><th>Strafe</th></tr></thead>
+      <tbody>
+        {verdicts.map(([n, v, s]) => <tr><td>{n}</td><td>{v}</td><td>{s}</td></tr>)}
+      </tbody>
+    </table>
+    <p class="meta">Quelle: Urteilsschrift, Sächsisches Staatsarchiv Leipzig, LG/SG Nr. 632.</p>
+  </div>
+</Base>

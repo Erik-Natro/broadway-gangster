@@ -1,16 +1,37 @@
 ---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+const events = [
+  ['Ab 1936', 'Swing und Jazz werden schwieriger zu hören; ab 1939, mit Kriegsbeginn, ist es mit der Tanzmusik ganz vorbei (Zeitzeuge Horst Geisenhainer).'],
+  ['Sommer 1942', 'Jugendliche aus verschiedenen Stadtteilen treffen sich in den Leipziger Gaststätten „Römisches Haus“ und „Canitz“.'],
+  ['Februar 1943', 'Horst Zimmerschitt verfasst ein Spottgedicht auf die NS-Führung.'],
+  ['26. April 1943', 'Zimmerschitt ruft zum Treffen auf dem Rummelplatz in der Wurzener Straße auf; es kommt zur Schlägerei mit Hitlerjungen.'],
+  ['6. November 1943', 'Werner Teumer wird nach Flugblattaktionen von der Gestapo verhaftet.'],
+  ['26. November 1943', 'Das Landgericht Leipzig verkündet das Urteil gegen acht Angeklagte.'],
+];
 ---
-
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Base title="Start">
+  <section class="hero">
+    <div class="wrap">
+      <p class="kicker">Leipzig 1942–1944</p>
+      <h1>Die Broadway-Gangster</h1>
+      <p class="lead">Jazz, Schallplatten und der Mut, anders zu sein: Wie Leipziger Jugendliche sich im Krieg dem Zugriff der Hitlerjugend entzogen.</p>
+    </div>
+  </section>
+  <div class="wrap">
+    <h2>Worum geht es?</h2>
+    <p>Als „Broadway“ bezeichneten Leipziger Jugendliche schon in den 1930er-Jahren die abends hell erleuchtete Petersstraße, in Anlehnung an New York. Daraus machten sich Jugendliche im Krieg einen eigenen Namen: Sie nannten sich selbst „Broadway-Gangster“. Sie trafen sich in Kneipen, hörten verbotene Musik, trugen eigene Abzeichen und lehnten die Hitlerjugend (HJ) ab.</p>
+    <p>Für die Nationalsozialisten war das eine Provokation. Im November 1943 standen acht der Jugendlichen vor Gericht.</p>
+    <Figure src="plakat-broadway-melodie" alt="Filmplakat „Broadway-Melodie 1938“ mit Robert Taylor und Eleanor Powell" caption="Bis 1941 liefen in Deutschland noch amerikanische Filme. Bei Jugendlichen besonders beliebt: „Broadway-Melodie“ (Plakat aus dem „Illustrierten Film-Kurier“)." />
+    <div class="card">
+      <h3>Entdecke die Seite</h3>
+      <p><a href="/geschichte/">Die Gruppe</a> – Treffpunkte, Zeichen, Prozess · <a href="/zeitzeugen/">Zeitzeugen</a> – drei Lebensgeschichten · <a href="/quellen/">Quellen</a> – woher das Wissen stammt</p>
+    </div>
+    <h2>Zeitleiste</h2>
+    <ol class="timeline">
+      {events.map(([date, text]) => (
+        <li><time>{date}</time>{text}</li>
+      ))}
+    </ol>
+  </div>
+</Base>

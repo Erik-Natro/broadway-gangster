@@ -1,0 +1,7 @@
+---
+const { src, alt, caption } = Astro.props;
+---
+<figure class="fig">
+  <img src={`/img/${src}.jpg`} alt={alt} loading="lazy" />
+  <figcaption>{caption}</figcaption>
+</figure>
