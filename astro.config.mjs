@@ -6,7 +6,7 @@ import vue from '@astrojs/vue';
 // https://astro.build/config
 export default defineConfig({
   integrations: [vue()],
-  site: 'https://Erik-Natro.github.io',
+  site: 'https://erik-natro.github.io',
   base: 'broadway-gangster'
 
 
