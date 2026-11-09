@@ -1,10 +1,13 @@
 ---
 import '../styles/global.css';
+import { url } from '../utils/url';
 const { title, description = 'Die Leipziger „Broadway-Gangster“: Jugendlicher Widerstand und Eigensinn im Nationalsozialismus.' } = Astro.props;
-const path = Astro.url.pathname;
+const strip = (p: string) => p.replace(/\/$/, '');
+const path = strip(Astro.url.pathname);
 const nav = [
   ['/', 'Start'],
   ['/geschichte/', 'Die Gruppe'],
+  ['/karte/', 'Karte'],
   ['/zeitzeugen/', 'Zeitzeugen'],
   ['/quellen/', 'Quellen'],
 ];
@@ -20,17 +23,17 @@ const nav = [
   <body>
     <header class="site">
       <div class="wrap">
-        <a class="brand" href="/">Broadway-Gangster</a>
+        <a class="brand" href={url('/')}>Broadway-Gangster</a>
         <nav>
           {nav.map(([href, label]) => (
-            <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>
+            <a href={url(href)} aria-current={path === strip(url(href)) ? 'page' : undefined}>{label}</a>
           ))}
         </nav>
       </div>
     </header>
     <main><slot /></main>
     <footer class="site">
-      <div class="wrap">Schulprojekt Geschichte · Leipzig im Nationalsozialismus</div>
+      <div class="wrap">Schulprojekt Geschichte/Gemeinschaftskunde</div>
     </footer>
   </body>
 </html>

@@ -1,7 +1,8 @@
 ---
+import { url } from '../utils/url';
 const { src, alt, caption } = Astro.props;
 ---
 <figure class="fig">
-  <img src={`/img/${src}.jpg`} alt={alt} loading="lazy" />
+  <img src={url(`/img/${src}.jpg`)} alt={alt} loading="lazy" />
   <figcaption>{caption}</figcaption>
 </figure>

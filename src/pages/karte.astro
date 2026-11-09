@@ -1,0 +1,95 @@
+---
+import Base from '../layouts/Base.astro';
+// lat/lng sind Näherungswerte. Exakte Werte: auf openstreetmap.org Rechtsklick → „Adresse anzeigen“.
+const places = [
+  { id: 1, name: 'Petersstraße („Broadway“)', lat: 51.3377, lng: 12.3716,
+    text: 'Die abends hell erleuchtete Einkaufsstraße nannten Leipziger Jugendliche schon in den 1930er-Jahren „Broadway“, nach dem Vorbild New Yorks.' },
+  { id: 2, name: 'Gaststätte Canitz', lat: 51.3340, lng: 12.3738,
+    text: 'Treffpunkt der „Broadway-Gangster“ im Erdgeschoss des Münzblocks am Peterssteinweg. Hier spielte eine jugendliche Jazzkapelle.' },
+  { id: 3, name: 'Hauptbahnhof', lat: 51.3455, lng: 12.3815,
+    text: 'Werner Teumer wollte in der Unterführung Flugblätter anbringen. Am 6. November 1943 wurde er von der Gestapo verhaftet.' },
+  { id: 4, name: 'Rummelplatz Wurzener Straße', lat: 51.3497, lng: 12.4010,
+    text: 'Am 26. April 1943 trafen sich hier etwa 100 Jugendliche. Es kam zur Schlägerei mit Hitlerjungen, die später Teil des Prozesses war.' },
+  { id: 5, name: 'Reudnitz', lat: 51.3375, lng: 12.4045,
+    text: 'Stadtteil, in dem Werner Teumer aufwuchs, der später die Flugblätter schrieb.' },
+  { id: 6, name: 'Connewitzer Kreuz', lat: 51.3143, lng: 12.3735,
+    text: 'Horst Geisenhainer: „Das Stückchen am Connewitzer Kreuz, das war für uns der Broadway.“ Die Connewitzer Meute traf sich vor dem UT-Kino in der Pegauer Straße und hörte Jazz vom Koffergrammophon.' },
+  { id: 7, name: 'Engelsdorf', lat: 51.3385, lng: 12.5050,
+    text: 'Die Anklageschrift nennt eine Gruppe der „Engelsdorfer“ mit Rudolf Jäger („Micke“) als Wortführer.' },
+];
+---
+<Base title="Karte">
+  <div class="wrap">
+    <section class="hero">
+      <p class="kicker">Karte</p>
+      <h1>Orte der Broadway-Gangster</h1>
+      <p class="lead">Wo sich die Jugendlichen trafen und wo die Ereignisse stattfanden. Klicke auf eine Nummer.</p>
+    </section>
+
+    <div id="map" class="leaflet-map" role="region" aria-label="Karte von Leipzig mit sieben Orten"></div>
+    <p class="meta">Die Lage der Markierungen ist angenähert. Orte, deren genaue Lage die Quellen nicht nennen (zum Beispiel das „Römische Haus“ und das „Naumannbräu“), fehlen. Kartendaten © OpenStreetMap-Mitwirkende.</p>
+
+    <h2>Die Orte im Überblick</h2>
+    {places.map((p) => (
+      <section class="card place" id={`ort-${p.id}`} data-id={p.id}>
+        <h3>{p.id}. {p.name}</h3>
+        <p>{p.text}</p>
+      </section>
+    ))}
+  </div>
+
+  <script id="places-data" type="application/json" set:html={JSON.stringify(places)} />
+  <script>
+    import L from 'leaflet';
+    import 'leaflet/dist/leaflet.css';
+
+    const placesData = document.getElementById('places-data');
+    if (!placesData) {
+      throw new Error('Karten-Daten nicht gefunden.');
+    }
+
+    const places = JSON.parse(placesData.textContent ?? '[]');
+    const map = L.map('map', { scrollWheelZoom: false });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>-Mitwirkende',
+    }).addTo(map);
+
+    const markers: Record<number, L.Marker> = {};
+    places.forEach((p) => {
+      const icon = L.divIcon({
+        className: 'pin-icon',
+        html: `<span>${p.id}</span>`,
+        iconSize: [30, 30],
+        iconAnchor: [15, 15],
+        popupAnchor: [0, -15],
+      });
+      const popup = `<strong>${p.id}. ${p.name}</strong><br>${p.text}`;
+      markers[p.id] = L.marker([p.lat, p.lng], { icon }).addTo(map).bindPopup(popup, { maxWidth: 260 });
+    });
+    map.fitBounds(places.map((p) => [p.lat, p.lng]), { padding: [30, 30] });
+
+    // Klick auf eine Karte in der Liste zoomt zum Ort
+    document.querySelectorAll('.place').forEach((el) => {
+      el.addEventListener('click', () => {
+        const m = markers[el.dataset.id];
+        map.flyTo(m.getLatLng(), 15);
+        m.openPopup();
+        document.getElementById('map')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  </script>
+</Base>
+
+<style is:global>
+  .leaflet-map { height: 30rem; margin: 1.5rem 0 .5rem; border: 1px solid var(--line); border-radius: 6px; background: var(--panel); }
+  /* Kartenkacheln im Look der dunklen Seite */
+  .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) grayscale(.5) sepia(.35) brightness(.95) contrast(.95); }
+  .pin-icon span { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%;
+    background: var(--red); color: #fff; font: 700 14px 'Trebuchet MS', Arial, sans-serif; border: 2px solid var(--bg); box-shadow: 0 1px 4px #000a; }
+  .pin-icon:hover span { background: var(--gold); color: #000; }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip { background: var(--panel); color: var(--text); }
+  .leaflet-popup-content { font: .95rem/1.5 Georgia, serif; margin: .8rem 1rem; }
+  .leaflet-container a { color: var(--gold); }
+  .place { cursor: pointer; }
+</style>
