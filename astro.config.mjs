@@ -7,7 +7,7 @@ import vue from '@astrojs/vue';
 export default defineConfig({
   integrations: [vue()],
   site: 'https://erik-natro.github.io',
-  base: 'broadway-gangster'
+  base: '/broadway-gangster'
 
 
 });
