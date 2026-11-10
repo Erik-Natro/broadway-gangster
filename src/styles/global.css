@@ -33,7 +33,7 @@ body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font: 1.05rem/1.7 Georgia, "Times New Roman", serif;
+    font: 1.05rem/1.7 Arial;
 }
 
 a {
@@ -48,7 +48,7 @@ a {
 h1,
 h2,
 h3 {
-    font-family: "Trebuchet MS", Arial, sans-serif;
+    font-family: Arial;
     line-height: 1.2;
     letter-spacing: 0.02em;
 }
